@@ -1,0 +1,26 @@
+-------------------------------------------------------------------
+
+     =========================================================
+     Geant4 - an Object-Oriented Toolkit for Simulation in HEP
+     =========================================================
+
+                    Example RM History file
+                    -----------------------
+This file should be used by Rogers and Mohan example coordinators to briefly
+summarize all major modifications introduced in the code and keep
+track of all tags.
+
+     ----------------------------------------------------------
+     * Reverse chronological order (last date on top), please *
+     ----------------------------------------------------------
+
+15/01/21 A. Naceur 
+- Cleaning example-B1 heritage for Gabriel verfications.
+
+14/01/21 A. Naceur 
+- Modifying CMakeList.txt in set(RogersMohan_SCRIPTS ...) 
+
+
+11/12/20 A. Naceur 
+- Creation. 
+
