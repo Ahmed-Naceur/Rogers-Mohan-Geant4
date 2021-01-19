@@ -1,0 +1,49 @@
+-------------------------------------------------------------------
+
+     =========================================================
+     Geant4 - an Object-Oriented Toolkit for Simulation in HEP
+     =========================================================
+
+                            Rogers-Mohan Example
+                            --------------------
+
+L'objectif est de déterminer le profil de dose en 1D (suivant) x dans une géométrie 
+multi-slabs telle que suggérée par Rogers et Mohan. 
+
+	
+ 1- GEOMETRY DEFINITION
+	
+   La géométrie est construite avec la classe B1DetectorConstruction.
+   Elle consiste en une plaque d'eau [1-4]cm, suivie d'une plaque d'os [4,6]cm, d'une 
+   plaque de poumon [6-13]cm et finalement une plaque d'eau de [13,31]cm.
+
+   Les chiffres entre crochets sont ceux utilisés dans Serpent-2. Donc, ça se réduit à 
+   des épaisseurs d'eau (3cm), os (2cm), poumon (7cm) et eau (18cm).
+
+   Les compositions NIST sont utilisées.
+
+ 
+		
+ 2- PHYSICS LIST
+ 
+   L'objectif est de transporter les gammas, électrons et positrons et d'avoir un levier
+   sur l'activation et la désactivation de certains phénomènes clés: la relaxation
+   atomique  (Auger, fluorescence et cascades associées), le bremsstrahlung et
+   l'annihilation.
+   Ces phénomènes correspondent à l'atout majeur de Serpent en Curiethérapie. 
+   
+   On veut également utiliser les données EPICS2017 et EPICS2014, en respectant les
+   limites de transport des auteurs de ces bibliothèques. On veut également tester les
+   bibliothèques Penelope et ceux de Géant. 
+   
+
+ C- HOW TO RUN
+
+   - Execute RogersMohan in the 'interactive mode' with visualization:
+        % ./RogersMohan run.mac 
+
+   - Execute RogersMohan
+        % nohup ./RogersMohan run.mac & 
+       
+
+	
