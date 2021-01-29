@@ -1,0 +1,395 @@
+#
+#    **********************************
+#    *                                *
+#    *   Macro for Runing & Control   *
+#    *                                *
+#    **********************************
+#
+
+
+#---------------------------------------------------------------
+# Choosing the physics model & cross section library (FUTURE)
+#---------------------------------------------------------------
+
+/UseEM/phys/addPhysics empenelope
+
+
+#---------------------------------------------------------------
+# Confirm cut (OBLIGATION, see p.216)
+#---------------------------------------------------------------
+
+/cuts/setLowEdge 1.0* keV
+
+#---------------------------------------------------------------
+# Initialize kernel
+#---------------------------------------------------------------
+
+/run/initialize
+
+#---------------------------------------------------------------
+# Control the amount of information printed.
+#---------------------------------------------------------------
+
+/control/verbose  0
+/tracking/verbose 0
+/run/verbose      0
+/event/verbose    0
+/gps/verbose      0
+
+#-------------------------------------------------------------------------------------------
+#                                 Define the particle source
+#-------------------------------------------------------------------------------------------
+# 1. Define the particle type
+# 2. Define the source positional distribution type (GABRIEL, DOIS-JE UTILISER PLANE)
+# 3. Define the source shape type (GABRIEL, DOIS-JE UTILISER RECTANGLE AVEC TYPE/PLANE)
+# 4. Define the centre co-ordinates of the source 
+# 5. Define the half length in x
+# 6. Define the half length in y (infinite)
+# 7. Define the half length in z (infinite)
+# 8./9./10. Define Parallelepiped formed angles
+# 11. Set the angular distribution type (here isotropic) 
+# 12. Set the source energy spectrum (here monoenergetic)
+# 13. Set the gamma energy for mono-energetic sources
+# 14. Set the number of particles emitted per event (events are selected by /run/beamOn)
+#-------------------------------------------------------------------------------------------
+
+/gps/particle   gamma
+/gps/pos/type   Volume  #Beam Surface Plane Point or Volume 
+/gps/pos/shape  Para
+/gps/pos/centre -15.25 0.0 0.0 cm
+/gps/pos/halfx  0.25 cm
+/gps/pos/halfy  8.0 cm
+/gps/pos/halfz  8.0 cm
+/gps/pos/paralp 0.0   rad
+/gps/pos/parthe 0.0   rad
+/gps/pos/parphi 0.0   rad
+#/gps/ang/type   iso
+/gps/ene/type  Mono
+/gps/ene/mono   18.0 MeV
+/gps/number     1  #GBARIEL, serait il mieux de définir un nombre de particules par batch ?
+/gps/direction  1 0 0
+/gps/source/show
+
+#-------------------------------------------------------------------------------
+#                              Define scoring mesh
+#-------------------------------------------------------------------------------
+
+/score/create/boxMesh boxMesh_1
+/score/mesh/boxSize 15.5 8.0 8.0 cm 
+/score/mesh/nBin    310    1      1     // idée avoir une résolution de 1 mm en "x"
+#/score/quantity/energyDeposit eDep J
+/score/quantity/doseDeposit   dDep Gy
+#/score/quantity/cellFlux      flux 
+#/score/quantity/cellCharge    ChargeDep
+/score/list
+/score/close
+
+#/score/create/boxMesh boxMesh_1
+#/score/mesh/boxSize 15.5 0.05 0.05 cm 
+#/score/mesh/nBin    300    1      1
+#/score/quantity/doseDeposit   dDep Gy
+#/score/list
+#/score/close
+#
+#/score/create/boxMesh boxMesh_2
+#/score/mesh/boxSize 15.5 0.1 0.1 cm 
+#/score/mesh/nBin    300    1      1
+#/score/quantity/doseDeposit   dDep Gy
+#/score/list
+#/score/close
+#
+#/score/create/boxMesh boxMesh_3
+#/score/mesh/boxSize 15.5 0.15 0.15 cm 
+#/score/mesh/nBin    300    1      1
+#/score/quantity/doseDeposit   dDep Gy
+#/score/list
+#/score/close
+#
+#/score/create/boxMesh boxMesh_4
+#/score/mesh/boxSize 15.5 0.20 0.20 cm 
+#/score/mesh/nBin    300    1      1
+#/score/quantity/doseDeposit   dDep Gy
+#/score/list
+#/score/close
+#
+#/score/create/boxMesh boxMesh_5
+#/score/mesh/boxSize 15.5 0.25 0.25 cm 
+#/score/mesh/nBin    300    1      1
+#/score/quantity/doseDeposit   dDep Gy
+#/score/list
+#/score/close
+#
+#/score/create/boxMesh boxMesh_6
+#/score/mesh/boxSize 15.5 0.3 0.3 cm 
+#/score/mesh/nBin    300    1      1
+#/score/quantity/doseDeposit   dDep Gy
+#/score/list
+#/score/close
+#
+#/score/create/boxMesh boxMesh_7
+#/score/mesh/boxSize 15.5 0.35 0.35 cm 
+#/score/mesh/nBin    300    1      1
+#/score/quantity/doseDeposit   dDep Gy
+#/score/list
+#/score/close
+#
+#/score/create/boxMesh boxMesh_8
+#/score/mesh/boxSize 15.5 0.40 0.40 cm 
+#/score/mesh/nBin    300    1      1
+#/score/quantity/doseDeposit   dDep Gy
+#/score/list
+#/score/close
+#
+#/score/create/boxMesh boxMesh_9
+#/score/mesh/boxSize 15.5 0.45 0.45 cm 
+#/score/mesh/nBin    300    1      1
+#/score/quantity/doseDeposit   dDep Gy
+#/score/list
+#/score/close
+#
+#/score/create/boxMesh boxMesh_10
+#/score/mesh/boxSize 15.5 0.50 0.50 cm 
+#/score/mesh/nBin    300    1      1
+#/score/quantity/doseDeposit   dDep Gy
+#/score/list
+#/score/close
+#----------------------------
+# Define scoring probe
+#----------------------------
+#GABRIEL, Si je ne mentionne le matériau du "Probe", prend-il par défaut le matériau de ma géomètrie ? (Merci) Je ne sais pas, par ailleurs, qu'est-ce qui serait mieux "probe" ou "mesh", une chose est sûre mesh est plus facile.
+
+#/score/create/probe Probes 0.31 cm 
+#/score/probe/locate -15.5 0. 0. cm 
+#/score/probe/locate -14.5 0. 0. cm 
+#/score/probe/locate -13.5 0. 0. cm 
+#/score/probe/locate -12.5 0. 0. cm 
+#/score/probe/locate -11.5 0. 0. cm 
+#/score/probe/locate -10.5 0. 0. cm 
+#/score/quantity/energyDeposit eDep J
+#/score/quantity/doseDeposit   dDep Gy
+#/score/quantity/cellFlux      flux 
+#/score/quantity/cellCharge    ChargeDep
+#/score/list
+#/score/close
+
+#-------------------------------------------------------------------------------
+#                     Activation of secondary phenomenons
+#-------------------------------------------------------------------------------
+
+#GABRIEL, l'idéal, pour des fins de comparaisons, est d'avoir un levier sur la relaxation atomique (Auger et fluoresence), l'annhilation et le bremsstrahlung. Je peux faire seulement une partie de cela ici...
+
+/process/em/deexcitation region true true true
+/process/em/fluo            true
+/process/em/auger           true
+#/process/em/pixe            true    //Particle-induced X-ray emission
+#/process/em/pixeXSmodel     Empirical
+#/process/em/pixeElecXSmodel Empirical
+
+#-------------------------------------------
+# To model full Auger Cascade (not cut off)
+#-------------------------------------------
+
+/process/em/augerCascade true
+/process/em/deexcitationIgnoreCut true
+
+
+###******************************************#
+###    **********************************    #
+###    *                                *    #
+###    *       Begin Visualization      *    #
+###    *                                *    #
+###    **********************************    #
+###******************************************#
+##
+###---------------------------------------------------------------------------------
+###                       Open selected visualization
+###---------------------------------------------------------------------------------
+##
+### Use this open statement to create an OpenGL view:
+##/vis/open OGL 700x700-0+0
+##
+### Use this open statement to create an OpenInventor view:
+###/vis/open OI
+##
+### Use this open statement to create a .prim file suitable for
+### viewing in DAWN:
+###/vis/open DAWNFILE
+##
+### Use this open statement to create a .heprep file suitable for
+### viewing in HepRApp:
+###/vis/open HepRepFile
+##
+### Use this open statement to create a .wrl file suitable for
+### viewing in a VRML viewer:
+###/vis/open VRML2FILE
+##
+### auto refresh and quieten vis messages whilst scene and
+### trajectories are established:
+##
+##/vis/viewer/set/autoRefresh true
+##/vis/verbose errors
+##
+###---------------------------------------------------------------------------------
+###                              Draw geometry:
+###---------------------------------------------------------------------------------
+##
+##/vis/drawVolume
+##/vis/scene/add/axes 0 0 0 1 cm
+##/vis/viewer/flush
+##
+##
+### Specify view angle:
+##
+##/vis/viewer/set/viewpointVector -1 0 0   #contrôle l'emplcement du volume dans la Fig.
+##/vis/viewer/set/lightsVector -1 0 0      #contrôle le logo G4
+##
+##
+### Specify style (surface, wireframe, auxiliary edges,...)
+##
+##/vis/viewer/set/style wireframe
+##/vis/viewer/set/auxiliaryEdge true
+##/vis/viewer/set/hiddenMarker true
+##/vis/viewer/set/lineSegmentsPerCircle 100
+##/vis/viewer/set/viewpointThetaPhi 180 150
+##
+### To get nice view 
+### Make the "World" box invisible
+##
+###/vis/geometry/set/visibility World 0 false
+##
+##
+### Re-establish auto refreshing and verbosity:
+##/vis/viewer/set/autoRefresh true
+##/vis/verbose warnings
+##
+##
+###---------------------------------------------------------------------------------
+###                            Draw trajectories:
+###---------------------------------------------------------------------------------
+##
+### Draw smooth trajectories at end of event, showing trajectory points
+### as markers 2 pixels wide:
+##
+##/vis/scene/add/trajectories rich
+##/vis/modeling/trajectories/create/drawByCharge
+##/vis/modeling/trajectories/drawByCharge-0/set +1 blue 
+##/vis/modeling/trajectories/drawByCharge-0/set -1 red 
+##/vis/modeling/trajectories/drawByCharge-0/set  0 green
+###/vis/modeling/trajectories/create/drawByParticleID
+###/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
+###/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 2
+##
+##
+### if too many tracks cause core dump
+### /tracking/storeTrajectory 0
+##
+### Draw hits at end of event:
+##/vis/scene/add/hits
+##
+### Changing the number of events kept by the vis manager
+##/vis/scene/endOfEventAction accumulate 50000
+##
+### To draw only gammas:
+###/vis/filtering/trajectories/create/particleFilter
+###/vis/filtering/trajectories/particleFilter-0/add gamma
+##
+### To invert the above, drawing all particles except gammas,
+### keep the above two lines but also add:
+###/vis/filtering/trajectories/particleFilter-0/invert true
+##
+##
+### To select or override default colours (note: e+ is blue by default):
+###/vis/modeling/trajectories/list
+###/vis/modeling/trajectories/drawByParticleID-0/set e+ yellow
+##
+##
+###---------------------------------------------------------------------------------
+###                                 Decorations
+###---------------------------------------------------------------------------------
+### Name
+##/vis/set/textColour green
+##/vis/set/textLayout right
+##/vis/scene/add/text2D 0.9 -.9 24 ! ! Rogers & Mohan Benchmark 
+### or, if your system does not support right-adjustment
+###/vis/scene/add/text2D 0 -.9 24 ! ! Rogers & Mohan Benchmark
+##/vis/set/textLayout    # Revert to normal (left adjusted) layout
+##/vis/set/textColour    # Revert to default text colour (blue)
+##
+###---------------------------------------------------------------------------------
+###                            Axes, référentiels et cadre
+###---------------------------------------------------------------------------------
+##
+### Axes, scale, etc.
+###/vis/scene/add/scale   # Simple scale line
+##/vis/scene/add/axes     # Simple axes: x=red, y=green, z=blue.
+##/vis/scene/add/eventID  # Drawn at end of event
+##/vis/scene/add/date     # Date stamp
+##/vis/scene/add/logo2D   # Simple logo
+###/vis/scene/add/logo    # 3D logo
+##
+### Frame
+##/vis/set/colour red
+##/vis/set/lineWidth 2
+##/vis/scene/add/frame      # Simple frame around the view
+##/vis/set/colour           # Revert to default colour (white)
+##/vis/set/lineWidth  3.0   # Revert to default line width (1.)
+##
+##
+##
+###******************************************#
+###    **********************************    #
+###    *                                *    #
+###    *       End of Visualization     *    #
+###    *                                *    #
+###    **********************************    #
+###******************************************#
+
+#---------------------------------------------------------------------------------
+#                                  Running Events
+#---------------------------------------------------------------------------------
+
+/run/beamOn 400000000
+
+#---------------------------------------------------------------------------------
+#                                  Scoring Saving
+#---------------------------------------------------------------------------------
+
+#-----------------------------
+# Saving mesh scores in files
+#-----------------------------
+
+/score/dumpQuantityToFile boxMesh_1 eDep       unidirectionnel_energy.ext
+/score/dumpQuantityToFile boxMesh_1 dDep       unidirectionnel_dose_score_zy_8.0_400M.txt
+/score/dumpQuantityToFile boxMesh_1 flux       flux.m
+/score/dumpQuantityToFile boxMesh_1 ChargeDep  deposit_charge.txt
+
+#/score/dumpQuantityToFile boxMesh_1  dDep deposit_dose_score_zy_0.05_1M.txt
+#/score/dumpQuantityToFile boxMesh_2  dDep deposit_dose_score_zy_0.10_1M.txt
+#/score/dumpQuantityToFile boxMesh_3  dDep deposit_dose_score_zy_0.15_1M.txt
+#/score/dumpQuantityToFile boxMesh_4  dDep deposit_dose_score_zy_0.20_1M.txt
+#/score/dumpQuantityToFile boxMesh_5  dDep deposit_dose_score_zy_0.25_1M.txt
+#/score/dumpQuantityToFile boxMesh_6  dDep deposit_dose_score_zy_0.30_1M.txt
+#/score/dumpQuantityToFile boxMesh_7  dDep deposit_dose_score_zy_0.35_1M.txt
+#/score/dumpQuantityToFile boxMesh_8  dDep deposit_dose_score_zy_0.40_1M.txt
+#/score/dumpQuantityToFile boxMesh_9  dDep deposit_dose_score_zy_0.45_1M.txt
+#/score/dumpQuantityToFile boxMesh_10 dDep deposit_dose_score_zy_0.50_1M.txt
+
+#-----------------------------
+# Saving probe scores in files
+#-----------------------------
+
+#/score/dumpQuantityToFile Probes eDep       deposit_energy.txt
+#/score/dumpQuantityToFile Probes dDep       deposit_dose_score_zy_0.05.txt
+#/score/dumpQuantityToFile Probes flux       flux.txt
+#/score/dumpQuantityToFile Probes ChargeDep  deposit_charge.txt
+
+#-----------------------------
+# Sauvegarde Fig. géomtètrie
+#-----------------------------
+
+#/vis/ogl/printEPS
+#/vis/ogl/set/printMode pixmap
+#/vis/ogl/set/printSize 3000 3000
+#/vis/ogl/set/printFilename benchmark_120_deg
+#/vis/ogl/export
+

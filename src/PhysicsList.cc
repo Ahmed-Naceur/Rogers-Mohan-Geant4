@@ -260,10 +260,12 @@ void PhysicsList::SetCuts()
 //-------------------------------------------------------------------------------
 
 // Possibilité de faire un cut en mm (0.05 mm Valeur de l'exemple de Curiethérapie)
-// G4double defaultCutValue = 0.0000000000005 * mm;
+// On utilise la valeur la plus haute pour que tous les particules secondaires (brem...) 
+// soient transportées  
+   G4double defaultCutValue = 10.0 * m;
 
 // Possibilité de faire un cut en eV pour éliminer les phénomènes secondaires
-   G4double defaultCutValue = 1.0 * keV;  // la limite de Serpent-2
+//   G4double defaultCutValue = 1.0 * keV;  // la limite de Serpent-2
 
 
    SetCutValue(defaultCutValue, "gamma");

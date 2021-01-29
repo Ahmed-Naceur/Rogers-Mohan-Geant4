@@ -46,7 +46,9 @@ target_link_libraries(RogersMohan ${Geant4_LIBRARIES})
 #----------------------------------------------------------------------------
 set(RogersMohan_SCRIPTS
   init_vis.mac
-  run.mac
+  Stack_dir_400M.mac
+  Stack_iso_300M.mac
+  Stack_iso_400M.mac
   vis.mac
   )
 

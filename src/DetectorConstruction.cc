@@ -58,9 +58,10 @@
   G4double x3 = 6.0 *cm ;
   G4double x4 = 13.0*cm ;
   G4double x5 = 31.0*cm ;
-
+  
   G4double l  = 8.0*cm ; 
   
+  //G4double WorldDimension = 0.5*m ;  
 //------------------------------------------------------------------------
 //                 Material definition (See Appendix-10 for NIST)
 //------------------------------------------------------------------------
@@ -79,6 +80,7 @@
 
   // Geometry construction   (name,   size in x, size in y, size in z)
 
+  //G4Box* World     = new G4Box("World"  ,WorldDimension ,WorldDimension,WorldDimension) ;
   G4Box* World     = new G4Box("World"  ,0.5*(x5-x0) ,l,l) ;
   G4Box* Slab1Geo  = new G4Box("Slab1"  ,0.5*(x2-x1) ,l,l) ;
   G4Box* Slab2Geo  = new G4Box("Slab2"  ,0.5*(x3-x2) ,l,l) ;

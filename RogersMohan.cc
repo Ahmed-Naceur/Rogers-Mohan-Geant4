@@ -23,15 +23,17 @@
 
 #include "DetectorConstruction.hh"
 #include "ActionInitialization.hh"
-
 #include "PhysicsList.hh"
 #include "PhysicsListMessenger.hh"
-
-
 #include "G4ScoringManager.hh"
 #include "G4VScoringMesh.hh"
 #include "G4VScoreWriter.hh"
 #include "globals.hh"
+#include "StackingAction.hh"
+#include "PrimaryGeneratorAction.hh"
+#include "SteppingAction.hh"
+#include "RunAction.hh"
+#include "EventAction.hh"
 
 #include "G4RunManagerFactory.hh"
 
@@ -99,7 +101,21 @@ int main(int argc,char** argv)
   // User action initialization
   //-------------------------------------------------------------------------------
 
-  runManager->SetUserInitialization(new ActionInitialization());
+  //runManager->SetUserInitialization(new ActionInitialization());
+
+  //-------------------------------------------------------------------------------
+  // Gabriel
+  //-------------------------------------------------------------------------------
+
+  PrimaryGeneratorAction *thePrimaryGeneratorAction = new PrimaryGeneratorAction();
+  RunAction *theRunAction = new RunAction();
+  runManager->SetUserAction(thePrimaryGeneratorAction);
+  //SteppingAction *theSteppingAction = new SteppingAction();
+  //runManager->SetUserAction(theSteppingAction);
+  runManager->SetUserAction(theRunAction);
+  runManager->SetUserAction(new StackingAction(theRunAction));
+  //EventAction* pEventAction = new EventAction();
+  //runManager->SetUserAction(pEventAction);
   
   //-------------------------------------------------------------------------------
   // Initialize visualization
@@ -112,6 +128,7 @@ int main(int argc,char** argv)
   
   G4UImanager* UImanager = G4UImanager::GetUIpointer();
   
+
   //-------------------------------------------------------------------------------
   // Process macro or start UI session
   //-------------------------------------------------------------------------------
